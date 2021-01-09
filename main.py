@@ -1,21 +1,37 @@
-# ---------------------------- PASSWORD GENERATOR ------------------------------- #
-
-
-# 3. Delete the values from entries
-
-# ---------------------------- UI SETUP ------------------------------
 from tkinter import *
+from tkinter import messagebox
+from generate_password import generate_password
+import pyperclip
 
 
 def get_values():
+    # get entries values
     website = website_input.get()
     username_email = email_username_input.get()
     password = password_input.get()
-    with open("website_infos", "a") as website_file:
-        website_file.write(f"{website} | {username_email} | {password}\n")
-    website_input.delete(0, END)
-    email_username_input.delete(0, END)
-    password_input.delete(0, END)
+    
+
+    # ask if want to add account
+    is_true = messagebox.askokcancel(title="Confirm", message="Do you want to add this account?")
+
+    
+    # cannot save if fields are empty
+    if len(website) == 0 or len(password) == 0:
+        messagebox.showerror("Empty fields", message="You cannot save empty fields.")
+    elif is_true:
+        # create text file or append to existing one
+        with open("website_infos", "a") as website_file:
+            website_file.write(f"{website} | {username_email} | {password}\n")
+            # clear inputs
+            website_input.delete(0, END)
+            password_input.delete(0, END)
+
+
+def random_password():
+  password = generate_password()
+  password_input.insert(0, password)
+  pyperclip.copy(password)
+
 
 
 # window setup
@@ -57,7 +73,7 @@ password_input.grid(row=3, column=1, sticky="EW")
 
 
 # # buttons
-generate_password_button = Button(text="Generate")
+generate_password_button = Button(text="Generate", command=random_password)
 generate_password_button.grid(row=3, column=2, padx=5, sticky="EW")
 
 add_button = Button(text="Add", width=20, command=get_values)
