@@ -4,9 +4,8 @@ from generate_password import generate_password
 import pyperclip
 import json
 
-# data = None
+
 def get_values():
-    # global data
     # get entries values
     website = website_input.get()
     username_email = email_username_input.get()
