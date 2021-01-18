@@ -71,7 +71,7 @@ def search_website():
 # window setup
 window = Tk()
 window.title("Password Managaer")
-window.config(padx=40, pady=40)
+window.config(padx=45, pady=45)
 
 
 # canvas setup
